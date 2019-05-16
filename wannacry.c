@@ -1,5 +1,12 @@
-int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nShowCmd)
+#include <windows.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
+char weird_url[] = "http://www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com";
+
+
+int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nShowCmd)
 {
   HINTERNET hInternet;
   HINTERNET internet_open_url_HANDLE;
