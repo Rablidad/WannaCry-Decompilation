@@ -25,14 +25,11 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   iVar1 = 14;
   werid_url_cp = weird_url;
   weird_url_cpy2 = local_50;
-  while (iVar1 != 0
-                    /* strcpy( weird_url_cpy2 , weird_url_cp ); */) {
-    iVar1 = iVar1 + -1;
-    *weird_url_cpy2 = *(undefined4 *)werid_url_cp;
-    werid_url_cp = werid_url_cp + 4;
-    weird_url_cpy2 = weird_url_cpy2 + 1;
-  }
+  
+  strcpy( weird_url_cpy2 , weird_url_cp );
+  
   *(char *)weird_url_cpy2 = *werid_url_cp;
+  
   local_17 = 0;
   local_13 = 0;
   local_f = 0;
@@ -40,6 +37,7 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   local_7 = 0;
   local_3 = 0;
   local_1 = 0;
+  
   InternetOpenA((LPCSTR)0x0,1,(LPCSTR)0x0,(LPCSTR)0x0,0);
   internet_open_url_HANDLE = InternetOpenUrlA(hInternet,(LPCSTR)local_50,(LPCSTR)0x0,0,2214592512,0)
   ;
