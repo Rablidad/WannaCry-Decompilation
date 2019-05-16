@@ -6,6 +6,7 @@
 // Functions Called
 void Create_SvcsConfigs(void);
 void if_first_time_executing_on_system_do_config(void);
+int create_and_open_wncry_exe_as_service_with_args(void);
 
 // arguments to GetProcAddress
 char CreateProcessA_str[] = "CreateProcessA";
@@ -109,6 +110,14 @@ void Create_SvcsConfigs(void)
 
 void if_first_time_executing_on_system_do_config(void)
 {
-  
+  create_and_open_wncry_exe_as_service_with_args();
+  FUN_00407ce0();
+  return; 
+}
+
+
+
+int create_and_open_wncry_exe_as_service_with_args(void)
+{
   
 }
