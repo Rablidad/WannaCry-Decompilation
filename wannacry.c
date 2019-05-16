@@ -5,7 +5,7 @@
 
 // Functions Called
 void Create_SvcsConfigs(void);
-
+void if_first_time_executing_on_system_do_config(void);
 
 // arguments to GetProcAddress
 char CreateProcessA_str[] = "CreateProcessA";
@@ -84,7 +84,7 @@ void Create_SvcsConfigs(void)
   argc = (int *)__p___argc();
                     /* if you runned the process without any arg, i.e. C:\path\to\wanacry */
   if (*argc < 2) {
-    FUN_00407f20();
+    if_first_time_executing_on_system_do_config();
                     /* else... */
     return;
   }
@@ -103,4 +103,12 @@ void Create_SvcsConfigs(void)
   TEntry_Dispatcher.lpServiceName = mssecsvc2_0_string;
   StartServiceCtrlDispatcherA(&TEntry_Dispatcher);
   return;
+}
+
+
+
+void if_first_time_executing_on_system_do_config(void)
+{
+  
+  
 }
